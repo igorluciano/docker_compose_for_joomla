@@ -1,0 +1,49 @@
+# version: '3.9'
+services:
+  app:
+    container_name: "${APP_NAME}_app"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./app/:/var/www/html
+      - ./php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini
+    networks:
+      - rede
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      - JOOMLA_DB_HOST=${DB_HOST}
+      - JOOMLA_DB_USER=${DB_USER}
+      - JOOMLA_DB_PASSWORD=${DB_PASSWORD}
+      - JOOMLA_DB_NAME=${DB_NAME}
+    ports:
+      - ${PORTA_EXPOSTA_APP}:80
+  db:
+    container_name: "${APP_NAME}_db"
+    image: mysql:8.2
+    volumes:
+      - database-data:/var/lib/mysql
+    networks:
+      - rede
+    env_file:
+      - .env
+    environment:
+      - MYSQL_HOST=${DB_HOST}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+    ports:
+      - ${PORTA_EXPOSTA_DB}:3306
+
+volumes:
+  database-data:
+    external: false
+
+networks:
+  rede:
+    driver: bridge
+    name: ${APP_NAME}
