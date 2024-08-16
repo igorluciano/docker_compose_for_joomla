@@ -2,6 +2,9 @@
 
 - Esqueleto base para subir Joomla com Mysql utilizando docker.
 
+- Para mais conhecer mais sobre o Joomla e seu funcionamento, acesse o curso gratuito do 
+Lucas Lima no Youtube: https://www.youtube.com/watch?v=FnMeJBvARuc&list=PLMuX0Gplr3XQ2l2-OV0Hl46K25ybd72E3
+
 # Requisitos
 
 - É necessário ter instalado `Git` para clonar o projeto e `Docker` para rodar.
